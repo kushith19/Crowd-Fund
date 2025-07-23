@@ -47,7 +47,7 @@ exports.donate = async (req, res) => {
   const campaign = await Campaign.findById(req.params.id);
   campaign.raisedAmount += amount;
   
-  // Update status if target amount is reached
+  
   if (campaign.raisedAmount >= campaign.targetAmount) {
     campaign.status = "ended";
   }

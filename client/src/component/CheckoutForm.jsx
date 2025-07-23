@@ -21,7 +21,6 @@ export default function CheckoutForm({ campaignId, amount }) {
     }
 
     try {
-      console.log("⏳ Creating PaymentIntent...");
       const res = await fetch("http://localhost:5000/api/payment/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -29,22 +28,20 @@ export default function CheckoutForm({ campaignId, amount }) {
       });
 
       const data = await res.json();
-      console.log("✅ PaymentIntent created:", data);
+      
 
-      console.log("⏳ Confirming payment...");
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
           card: elements.getElement(CardElement),
         },
       });
 
-      console.log("✅ Payment confirmation result:", result);
 
       if (result.error) {
         setStatus("❌ Payment failed: " + result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
         setStatus("✅ Payment successful!");
-        console.log("✅ Payment succeeded. Updating campaign...");
+        
 
         const token = localStorage.getItem("token");
         if (!token) {
@@ -63,14 +60,12 @@ export default function CheckoutForm({ campaignId, amount }) {
           }
         );
 
-        console.log("✅ Campaign updated:", donateRes.data);
 
         setTimeout(() => {
           window.location.href = `/campaign/${campaignId}`;
-        }, 2000); // Optional delay to show success
+        }, 2000); 
       }
     } catch (error) {
-      console.error("🔥 Caught error:", error);
       setStatus("An error occurred. Try again.");
     }
   };
