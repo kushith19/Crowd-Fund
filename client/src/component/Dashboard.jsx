@@ -18,7 +18,7 @@ const Dashboard = () => {
           return;
         }
 
-        const response = await axios.get('http://localhost:5000/api/campaigns/my-campaigns', {
+        const response = await axios.get('https://funddaddy-backend.onrender.com/api/campaigns/my-campaigns', {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -45,7 +45,8 @@ const Dashboard = () => {
         return;
       }
 
-      const response = await axios.delete(`http://localhost:5000/api/campaigns/${campaignId}`, {
+      const response = await axios.delete(`https://funddaddy-backend.onrender.com
+/api/campaigns/${campaignId}`, {
         headers: {
           Authorization: `Bearer ${token}`
         }

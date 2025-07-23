@@ -21,14 +21,13 @@ export default function CheckoutForm({ campaignId, amount }) {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/payment/create-payment-intent", {
+      const res = await fetch("https://funddaddy-backend.onrender.com/api/payment/create-payment-intent", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount }),
       });
 
       const data = await res.json();
-      
 
       const result = await stripe.confirmCardPayment(data.clientSecret, {
         payment_method: {
@@ -36,12 +35,10 @@ export default function CheckoutForm({ campaignId, amount }) {
         },
       });
 
-
       if (result.error) {
         setStatus("❌ Payment failed: " + result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
         setStatus("✅ Payment successful!");
-        
 
         const token = localStorage.getItem("token");
         if (!token) {
@@ -50,7 +47,7 @@ export default function CheckoutForm({ campaignId, amount }) {
         }
 
         const donateRes = await axios.post(
-          `http://localhost:5000/api/campaigns/${campaignId}/donate`,
+          `https://funddaddy-backend.onrender.com/api/campaigns/${campaignId}/donate`,
           { amount },
           {
             headers: {
@@ -60,12 +57,12 @@ export default function CheckoutForm({ campaignId, amount }) {
           }
         );
 
-
         setTimeout(() => {
           window.location.href = `/campaign/${campaignId}`;
-        }, 2000); 
+        }, 2000);
       }
     } catch (error) {
+      console.error(error);
       setStatus("An error occurred. Try again.");
     }
   };

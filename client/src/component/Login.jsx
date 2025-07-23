@@ -28,7 +28,7 @@ export default function LoginPage() {
     console.log("Attempting login with:", formData);
     
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", formData);
+      const response = await axios.post("https://funddaddy-backend.onrender.com/api/auth/login", formData);
       console.log("Full login response:", response);
       console.log("Login response data:", response.data);
       

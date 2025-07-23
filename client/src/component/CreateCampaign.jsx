@@ -48,7 +48,7 @@ export default function CreateCampaign() {
 
       // Make the API call
       const response = await axios.post(
-        'http://localhost:5000/api/campaigns',
+        'https://funddaddy-backend.onrender.com/api/campaigns',
         campaignData,
         {
           headers: {

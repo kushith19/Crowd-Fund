@@ -18,7 +18,7 @@ export default function AllCampaigns() {
 
   const fetchCampaigns = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/campaigns');
+      const response = await axios.get('https://funddaddy-backend.onrender.com/api/campaigns');
       if (response.data && response.data.length > 0) {
         setCampaigns(response.data);
       } else {
