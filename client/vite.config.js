@@ -1,10 +1,19 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
+import { defineConfig } from 'vite';
+import react from '@vitejs/plugin-react';
+import { viteStaticCopy } from 'vite-plugin-static-copy';
 
-
-// https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    viteStaticCopy({
+      targets: [
+        {
+          src: 'public/_redirects', // path to your file
+          dest: '.'                 // copy to root of dist/
+        }
+      ]
+    })
+  ],
   server: {
     proxy: {
       '/api': {
@@ -14,4 +23,4 @@ export default defineConfig({
       }
     }
   }
-})
+});
